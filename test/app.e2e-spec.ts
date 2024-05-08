@@ -56,7 +56,25 @@ describe('AppController (e2e)', () => {
     it('GET 404', () => {
       return request(app.getHttpServer()).get('/movies/999').expect(404);
     });
-    it.todo('POST');
-    it.todo('PATCH');
+    it('PATCH', () => {
+      return request(app.getHttpServer())
+        .put('/movies/1')
+        .send({ title: 'TEST updated' })
+        .expect(200);
+    });
+    it('POST 400', () => {
+      return request(app.getHttpServer())
+        .post('/movies')
+        .send({
+          title: 'TEST title',
+          year: 2000,
+          genres: ['test'],
+          other: 'thing',
+        })
+        .expect(400);
+    });
+    it('DELETE', () => {
+      return request(app.getHttpServer()).delete('/movies/1').expect(200);
+    });
   });
 });
